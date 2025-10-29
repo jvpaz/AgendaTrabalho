@@ -51,16 +51,20 @@ public JanelaPrincipal() {
 private void addCompromisso() {
     Compromisso newCompromisso = new Compromisso();
 
-
+    //Cria caixa de dialógo para descrição do compromisso.
     newCompromisso.setDescricao(JOptionPane.showInputDialog(this, "Adicione um novo compromisso:"));
 
+    //Checa para ver se está vazio.
     if (newCompromisso.getDescricao() == null || newCompromisso.getDescricao().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma descrição!");
         return; 
     }
 
+    //Variavéis para receber informações dos calendários
     DatePicker datePicker = new DatePicker();
     TimePicker timePicker = new TimePicker();
 
+    //Cria painéis dos calendários
     JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
     panel.add(new JLabel("Selecione a data:")); 
     panel.add(datePicker);
@@ -69,15 +73,20 @@ private void addCompromisso() {
 
     int result = JOptionPane.showConfirmDialog(this, panel, "Selecione a data e horário", JOptionPane.OK_CANCEL_OPTION);
 
-    if (result == JOptionPane.OK_OPTION && datePicker.getDate() != null && timePicker.getTime() != null) {
-        LocalDateTime dateTime = LocalDateTime.of(datePicker.getDate(), timePicker.getTime());
-        newCompromisso.setPeriodo(dateTime);
-
-        CompromissoListModel.addElement(newCompromisso);
+    //Checa se horário ou data estão inválidos ou vazios
+    if (result == JOptionPane.OK_OPTION && datePicker.getDate() == null && timePicker.getTime() == null) {
+        JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma data/horário válido!");
+        return;
     }
+
+    LocalDateTime dateTime = LocalDateTime.of(datePicker.getDate(), timePicker.getTime());
+    newCompromisso.setPeriodo(dateTime);
+
+    CompromissoListModel.addElement(newCompromisso);
 }
 
 private void editCompromisso() {
+    //Procura pelo index de compromisso através da função getSelectIndex oferecido pela List
         int selectedIndex = CompromissoList.getSelectedIndex();
         if (selectedIndex == -1) {
             JOptionPane.showMessageDialog(this, "Compromisso para edição inválido ou nulo!");
@@ -86,9 +95,12 @@ private void editCompromisso() {
 
         Compromisso newCompromisso = CompromissoListModel.getElementAt(selectedIndex);
         newCompromisso.setDescricao(JOptionPane.showInputDialog(this, "Edite o compromisso:", newCompromisso.getDescricao()));
-        if (newCompromisso.getDescricao() != null && !newCompromisso.getDescricao().trim().isEmpty()) {
-            CompromissoListModel.setElementAt(newCompromisso, selectedIndex);
+        if (newCompromisso.getDescricao() == null && newCompromisso.getDescricao().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma descrição!");
+            return;
         }
+
+        CompromissoListModel.setElementAt(newCompromisso, selectedIndex);
 }
 
 private void deleteCompromisso() {
