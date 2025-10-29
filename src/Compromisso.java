@@ -6,10 +6,10 @@ public class Compromisso {
 
     public Compromisso(){};
 
-    public Compromisso(String descricao, String periodo)
+    public Compromisso(String descricao, LocalDateTime periodo)
     {
         this.descricao = descricao;
-        this.periodo = LocalDateTime.parse(periodo);
+        this.periodo = periodo;
     }
 
     public String getDescricao() {
