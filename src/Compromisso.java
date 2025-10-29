@@ -1,8 +1,10 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Compromisso {
     private String descricao;
     private LocalDateTime periodo;
+    DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd-MM-YYYY HH:mm");
 
     public Compromisso(){};
 
@@ -17,7 +19,7 @@ public class Compromisso {
     }
 
     public LocalDateTime getPeriodo() {
-        return periodo;
+        return this.periodo;
     }
 
     public void setDescricao(String descricao) {
@@ -30,6 +32,6 @@ public class Compromisso {
 
     @Override
     public String toString() {
-        return descricao + " | " + periodo;
-    }
+        return getDescricao() + " | " + getPeriodo().format(formatador);
+    } 
 }

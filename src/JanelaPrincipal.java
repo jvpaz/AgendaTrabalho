@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.TimePicker;
 import java.awt.*;
@@ -31,6 +33,7 @@ public JanelaPrincipal() {
 
         //Cria os botões e os posiciona em seu painel respectivo.
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setBorder(new EmptyBorder(10,10,10,10));
         buttonPanel.add(addButton);
         buttonPanel.add(editButton);
         buttonPanel.add(deleteButton);
@@ -83,6 +86,8 @@ private void addCompromisso() {
     newCompromisso.setPeriodo(dateTime);
 
     CompromissoListModel.addElement(newCompromisso);
+
+    CompromissoUtils.ordernarPorData(CompromissoListModel);
 }
 
 private void editCompromisso() {
@@ -102,6 +107,8 @@ private void editCompromisso() {
 
         newCompromisso.setDescricao(novaDescricao);
         CompromissoListModel.setElementAt(newCompromisso, selectedIndex);
+
+        CompromissoUtils.ordernarPorData(CompromissoListModel);
 }
 
 private void deleteCompromisso() {
