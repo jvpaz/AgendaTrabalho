@@ -4,12 +4,12 @@ import com.github.lgooddatepicker.components.TimePicker;
 import java.awt.*;
 import java.time.LocalDateTime;
 
-public class Paineis extends JFrame {
+public class JanelaPrincipal extends JFrame {
     private DefaultListModel<Compromisso> CompromissoListModel; //Modelo da lista de compromissos
     private JList<Compromisso> CompromissoList; //Lista de compromissos
     private JButton addButton, editButton, deleteButton; //Botões de adicionar, deletar e editar.
 
-public Paineis() {
+public JanelaPrincipal() {
         //Estabelece informações básicas da janela:
         setTitle("Agenda de Compromissos"); //Nome
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //O que fazer caso fechar a janela.
