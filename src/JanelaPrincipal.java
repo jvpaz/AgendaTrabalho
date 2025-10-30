@@ -24,6 +24,8 @@ public JanelaPrincipal() {
         CompromissoListModel = new DefaultListModel<>();
         CompromissoList = new JList<>(CompromissoListModel);
         CompromissoList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        CompromissoListModel.addAll(ArquivoUtils.lerTxt());
+
         JScrollPane scrollPane = new JScrollPane(CompromissoList);
 
         //Dá nome aos botões.
@@ -83,6 +85,7 @@ private void addCompromisso() {
     }
 
     LocalDateTime dateTime = LocalDateTime.of(datePicker.getDate(), timePicker.getTime());
+    //System.out.println(dateTime);
     newCompromisso.setPeriodo(dateTime);
 
     CompromissoListModel.addElement(newCompromisso);

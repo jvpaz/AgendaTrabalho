@@ -2,7 +2,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import javax.swing.DefaultListModel;
 
-public class CompromissoUtils {
+public final class CompromissoUtils {
+
+    private CompromissoUtils() {} //Impede instância de classe auxiliar.
+
     public static void ordernarPorData(DefaultListModel<Compromisso> listaModels)
     {
 
