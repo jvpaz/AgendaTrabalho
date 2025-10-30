@@ -107,7 +107,7 @@ private void editCompromisso() {
 
         newCompromisso.setDescricao(novaDescricao);
         CompromissoListModel.setElementAt(newCompromisso, selectedIndex);
-        CompromissoUtils.inserirNoTXT(newCompromisso);
+        //CompromissoUtils.inserirNoTXT(newCompromisso);
         CompromissoUtils.ordernarPorData(CompromissoListModel);
 }
 
@@ -122,6 +122,7 @@ private void deleteCompromisso() {
                 this, "Tem certeza que deseja deletar esse compromisso?", "", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             CompromissoListModel.remove(selectedIndex);
+            //CompromissoUtils.removerDoTXT(CompromissoListModel,selectedIndex);
         }
 }
 }
