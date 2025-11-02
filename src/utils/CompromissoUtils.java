@@ -26,6 +26,8 @@ public final class CompromissoUtils {
 
     public static void ordenarPorEstado(DefaultListModel<Compromisso> listaModels)
     {
+        //Passa todos elementos da ListModel para um array temporário e depois ordena 
+        //o array se baseando nos estados de cada compromisso.
         ArrayList<Compromisso> lista = new ArrayList<>();
         for(int i = 0; i < listaModels.size(); i++)
         lista.add(listaModels.getElementAt(i));

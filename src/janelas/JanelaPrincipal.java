@@ -35,15 +35,16 @@ public JanelaPrincipal() {
         CompromissoList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         CompromissoListModel.addAll(ArquivoUtils.lerTxt());
 
+        //Criar um listener em JanelaPrincipal para realizar uma ação se a janela tiver sido fechada.
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 int check = JOptionPane.showConfirmDialog(JanelaPrincipal.this, "Deseja salvar alterações antes de sair?", "Sair", JOptionPane.YES_NO_OPTION);
                 if(check == JOptionPane.YES_NO_OPTION)
-                ArquivoUtils.salvarList(CompromissoListModel); 
+                ArquivoUtils.salvarList(CompromissoListModel); //Chama função de ArquvioUtils para salvar compromissos presentes.
 
-                dispose();             
-                System.exit(0);        
+                dispose(); //Fecha janela.
+                System.exit(0); //Fecha programa.
             }
         });
         
@@ -56,18 +57,21 @@ public JanelaPrincipal() {
         deleteButton = new JButton("Deletar");
 
 
+        //Dá nome aos botões de radio e os insere em um grupo de botões
         radioData = new JRadioButton("Periodo");
         radioState = new JRadioButton("Estado");
         radioButtonGroup = new ButtonGroup();
         radioButtonGroup.add(radioData);
         radioButtonGroup.add(radioState);
 
+        //Cria painél para guardar os botões de radio.
         JPanel radioPanel = new JPanel(new GridLayout(3, 1, -70, -70));
         JLabel radioLabel = new JLabel("Ordenar por:");
         radioPanel.add(radioLabel);
         radioPanel.add(radioData);
         radioPanel.add(radioState);
 
+        //Adiciona um listener de ação para realizar funções condicionadas a cada radio.
         radioData.addActionListener(e -> CompromissoUtils.ordernarPorData(CompromissoListModel));
         radioState.addActionListener(e -> CompromissoUtils.ordenarPorEstado(CompromissoListModel));
         
@@ -115,13 +119,13 @@ private void addCompromisso() {
 }
 
 private void editCompromisso() {
-    int selectedIndex = CompromissoList.getSelectedIndex();
-    if (selectedIndex == -1) {
+    int indiceSelecionado = CompromissoList.getSelectedIndex();
+    if (indiceSelecionado == -1) {
         JOptionPane.showMessageDialog(this, "Selecione um compromisso válido para edição!");
         return;
     }
 
-    Compromisso compromisso = CompromissoListModel.getElementAt(selectedIndex);
+    Compromisso compromisso = CompromissoListModel.getElementAt(indiceSelecionado);
 
     int check = JOptionPane.showConfirmDialog(this, "Deseja editar a descrição do compromisso selecionado?", "Descrição", JOptionPane.YES_NO_OPTION);
 
@@ -148,13 +152,14 @@ private void editCompromisso() {
     }
 
     // Atualiza na lista
-    CompromissoListModel.setElementAt(compromisso, selectedIndex);
+    CompromissoListModel.setElementAt(compromisso, indiceSelecionado);
 }
 
 
 private void deleteCompromisso() {
-        int selectedIndex = CompromissoList.getSelectedIndex();
-        if (selectedIndex == -1) {
+        //Recebe compromisso selecionado pelo usuário.
+        int indiceSelecionado = CompromissoList.getSelectedIndex();
+        if (indiceSelecionado == -1) {
             JOptionPane.showMessageDialog(this, "Compromisso para exclusão inválido ou nulo!.");
             return;
         }
@@ -162,7 +167,7 @@ private void deleteCompromisso() {
         int confirm = JOptionPane.showConfirmDialog(
                 this, "Tem certeza que deseja deletar esse compromisso?", "", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
-            CompromissoListModel.remove(selectedIndex);
+            CompromissoListModel.remove(indiceSelecionado);
         }
 }
 }

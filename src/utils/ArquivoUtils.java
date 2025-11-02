@@ -17,10 +17,10 @@ public final class ArquivoUtils {
     private ArquivoUtils () {} //Impede instância de classe auxiliar.
     public static List<Compromisso> lerTxt()
     {
-        if (!checarPasta()) 
+        if (!checarPasta()) //Checa existência da pasta /log
             criarPasta();
 
-        if (!checarTxt())
+        if (!checarTxt()) //Checa existência do arquivo comp.txt
             criarTxt();
 
         List<Compromisso> tempCompromissos = new ArrayList<>();
@@ -31,7 +31,7 @@ public final class ArquivoUtils {
             
 
             while ((linhas = leitor.readLine()) != null) {
-                String[] informacoes = linhas.split("\\|"); //Posicao [0] guarda a descrição, [1] a data;
+                String[] informacoes = linhas.split("\\|"); //Posicao de informacoes [0] guarda a descrição, [1] a data e [2] o estado;
                 String descricao = informacoes[0];
                 LocalDateTime data = LocalDateTime.parse(informacoes[1]);
                 Estado estado = Estado.valueOf(informacoes[2]);
@@ -91,14 +91,14 @@ public final class ArquivoUtils {
             criarTxt();
 
         try {
-            BufferedWriter leitor = Files.newBufferedWriter(Path.of("log/comp.txt"));
+            BufferedWriter leitor = Files.newBufferedWriter(Path.of("log/comp.txt")); //Instância um escritor sobre o arquivo comp.txt
             
             ArrayList<Compromisso> lista = new ArrayList<>();
             
-            for(int i = 0; i < listaModels.size(); i++)
+            for(int i = 0; i < listaModels.size(); i++) //Passa CompromissoListModel para um array temporário
                 lista.add(listaModels.getElementAt(i));
 
-           for(int i = 0; i < lista.size(); i++)   
+           for(int i = 0; i < lista.size(); i++)   //Escreve cada compromisso presente em comp.txt
             {
                 leitor.write(lista.get(i).getDescricao() + "|" + lista.get(i).getPeriodo() + "|" + lista.get(i).getEstado().getDescricao() + "\n");
             }
