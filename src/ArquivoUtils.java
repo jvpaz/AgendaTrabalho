@@ -1,10 +1,13 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.DefaultListModel;
 
 public final class ArquivoUtils {
     private ArquivoUtils () {} //Impede instância de classe auxiliar.
@@ -72,5 +75,35 @@ public final class ArquivoUtils {
         Path arquivo = Path.of("log/comp.txt");
 
         return (Files.exists(arquivo) && (Files.isWritable(arquivo) && Files.isReadable(arquivo))) ? true : false;
+    }
+
+    public static void salvarList(DefaultListModel<Compromisso> listaModels)
+    {
+        if (!checarPasta()) 
+            criarPasta();
+
+        if (!checarTxt())
+            criarTxt();
+
+        try {
+            BufferedWriter leitor = Files.newBufferedWriter(Path.of("log/comp.txt"));
+            
+            ArrayList<Compromisso> lista = new ArrayList<>();
+            
+            for(int i = 0; i < listaModels.size(); i++)
+                lista.add(listaModels.getElementAt(i));
+
+           for(int i = 0; i < lista.size(); i++)   
+            {
+                leitor.write(lista.get(i).getDescricao() + "|" + lista.get(i).getPeriodo() + "\n");
+            }
+
+            leitor.close();
+        } catch (IOException e) {
+            
+            e.printStackTrace();
+        }
+        
+        
     }
 }

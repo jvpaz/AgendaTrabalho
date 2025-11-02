@@ -91,6 +91,7 @@ private void addCompromisso() {
     CompromissoListModel.addElement(newCompromisso);
 
     CompromissoUtils.ordernarPorData(CompromissoListModel);
+    ArquivoUtils.salvarList(CompromissoListModel);
 }
 
 private void editCompromisso() {
