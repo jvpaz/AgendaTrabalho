@@ -4,6 +4,8 @@ import javax.swing.border.EmptyBorder;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.TimePicker;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDateTime;
 
 public class JanelaPrincipal extends JFrame {
@@ -14,7 +16,7 @@ public class JanelaPrincipal extends JFrame {
 public JanelaPrincipal() {
         //Estabelece informações básicas da janela:
         setTitle("Agenda de Compromissos"); //Nome
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //O que fazer caso fechar a janela.
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //O que fazer caso fechar a janela.
         setSize(400, 400); //Tamanho
         setResizable(false); //Se é Ajustavél
         setLocationRelativeTo(null); //Posição inicial
@@ -25,6 +27,19 @@ public JanelaPrincipal() {
         CompromissoList = new JList<>(CompromissoListModel);
         CompromissoList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         CompromissoListModel.addAll(ArquivoUtils.lerTxt());
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int check = JOptionPane.showConfirmDialog(JanelaPrincipal.this, "Deseja salvar alterações antes de sair?", "Sair", JOptionPane.YES_NO_OPTION);
+                if(check == JOptionPane.YES_NO_OPTION)
+                ArquivoUtils.salvarList(CompromissoListModel); 
+
+                dispose();             
+                System.exit(0);        
+            }
+        });
+        
 
         JScrollPane scrollPane = new JScrollPane(CompromissoList);
 
@@ -91,7 +106,6 @@ private void addCompromisso() {
     CompromissoListModel.addElement(newCompromisso);
 
     CompromissoUtils.ordernarPorData(CompromissoListModel);
-    ArquivoUtils.salvarList(CompromissoListModel);
 }
 
 private void editCompromisso() {
