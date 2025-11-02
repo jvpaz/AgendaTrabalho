@@ -1,6 +1,9 @@
+package utils;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import javax.swing.DefaultListModel;
+import model.Compromisso;
 
 public final class CompromissoUtils {
 

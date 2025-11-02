@@ -1,3 +1,4 @@
+package model;
 public enum Estado {
     Concluida("Concluida"),
     Pendente("Pendente");

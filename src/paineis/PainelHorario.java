@@ -1,9 +1,12 @@
+package paineis;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.TimePicker;
+
+import model.Compromisso;
 
 public class PainelHorario extends JPanel {
     public PainelHorario(Compromisso newCompromisso) {

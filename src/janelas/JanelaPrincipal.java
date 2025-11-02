@@ -1,5 +1,14 @@
+package janelas;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import model.Compromisso;
+import model.Estado;
+import paineis.PainelDescricao;
+import paineis.PainelHorario;
+import utils.ArquivoUtils;
+import utils.CompromissoUtils;
+
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
