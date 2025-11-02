@@ -127,18 +127,18 @@ private void editCompromisso() {
 
     if (check == JOptionPane.YES_OPTION) {
         new PainelDescricao(compromisso);
-    if (compromisso.getDescricao() == null || compromisso.getDescricao().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma descrição!");
-        return;
+        if (compromisso.getDescricao() == null || compromisso.getDescricao().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma descrição!");
+            return;
     }
     }
     
     check = JOptionPane.showConfirmDialog(this, "Deseja editar o período do compromisso selecionado?", "Período", JOptionPane.YES_NO_OPTION);
     if (check == JOptionPane.YES_OPTION) {
          new PainelHorario(compromisso);
-    if (compromisso.getPeriodo() == null) {
-        JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma data/horário válido!");
-        return;
+        if (compromisso.getPeriodo() == null) {
+            JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma data/horário válido!");
+            return;
     }
     }
    
