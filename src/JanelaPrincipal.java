@@ -1,12 +1,8 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import com.github.lgooddatepicker.components.DatePicker;
-import com.github.lgooddatepicker.components.TimePicker;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.time.LocalDateTime;
 
 public class JanelaPrincipal extends JFrame {
     private DefaultListModel<Compromisso> CompromissoListModel; //Modelo da lista de compromissos
@@ -89,64 +85,63 @@ public JanelaPrincipal() {
 }
 
 private void addCompromisso() {
-    Compromisso newCompromisso = new Compromisso();
+    Compromisso novo = new Compromisso();
 
-    //Cria caixa de dialógo para descrição do compromisso.
-    newCompromisso.setDescricao(JOptionPane.showInputDialog(this, "Adicione um novo compromisso:"));
-
-    //Checa para ver se está vazio.
-    if (newCompromisso.getDescricao() == null || newCompromisso.getDescricao().trim().isEmpty()) {
+    // Painel de descrição
+    new PainelDescricao(novo);
+    if (novo.getDescricao() == null || novo.getDescricao().trim().isEmpty()) {
         JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma descrição!");
-        return; 
+        return;
     }
 
-    //Variavéis para receber informações dos calendários
-    DatePicker datePicker = new DatePicker();
-    TimePicker timePicker = new TimePicker();
-
-    //Cria painéis dos calendários
-    JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
-    panel.add(new JLabel("Selecione a data:")); 
-    panel.add(datePicker);
-    panel.add(new JLabel("Selecione o horário:"));
-    panel.add(timePicker);
-
-    int result = JOptionPane.showConfirmDialog(this, panel, "Selecione a data e horário", JOptionPane.OK_CANCEL_OPTION);
-
-    //Checa se horário ou data estão inválidos ou vazios
-    if (result == JOptionPane.OK_OPTION && datePicker.getDate() == null || timePicker.getTime() == null) {
+    // Painel de data e hora
+    new PainelHorario(novo);
+    if (novo.getPeriodo() == null) {
         JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma data/horário válido!");
         return;
     }
 
-    LocalDateTime dateTime = LocalDateTime.of(datePicker.getDate(), timePicker.getTime());
-    //System.out.println(dateTime);
-    newCompromisso.setPeriodo(dateTime);
-    newCompromisso.setEstado(Estado.Pendente);
-
-    CompromissoListModel.addElement(newCompromisso);
+    // Adiciona à lista apenas se os dados forem válidos
+    CompromissoListModel.addElement(novo);
 }
 
 private void editCompromisso() {
-    //Procura pelo index de compromisso através da função getSelectIndex oferecido pela List
-        int selectedIndex = CompromissoList.getSelectedIndex();
-        if (selectedIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Compromisso para edição inválido ou nulo!");
-            return;
-        }
+    int selectedIndex = CompromissoList.getSelectedIndex();
+    if (selectedIndex == -1) {
+        JOptionPane.showMessageDialog(this, "Selecione um compromisso válido para edição!");
+        return;
+    }
 
-        Compromisso newCompromisso = CompromissoListModel.getElementAt(selectedIndex);
-        String novaDescricao = JOptionPane.showInputDialog(this, "Edite o compromisso:", newCompromisso.getDescricao());
-        if (novaDescricao == null || novaDescricao.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma descrição!");
-            return;
-        }
+    Compromisso compromisso = CompromissoListModel.getElementAt(selectedIndex);
 
-        newCompromisso.setDescricao(novaDescricao);
-        CompromissoListModel.setElementAt(newCompromisso, selectedIndex);
+    int check = JOptionPane.showConfirmDialog(this, "Deseja editar a descrição do compromisso selecionado?", "Descrição", JOptionPane.YES_NO_OPTION);
 
-        CompromissoUtils.ordernarPorData(CompromissoListModel);
+    if (check == JOptionPane.YES_OPTION) {
+        new PainelDescricao(compromisso);
+    if (compromisso.getDescricao() == null || compromisso.getDescricao().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma descrição!");
+        return;
+    }
+    }
+    
+    check = JOptionPane.showConfirmDialog(this, "Deseja editar o período do compromisso selecionado?", "Período", JOptionPane.YES_NO_OPTION);
+    if (check == JOptionPane.YES_OPTION) {
+         new PainelHorario(compromisso);
+    if (compromisso.getPeriodo() == null) {
+        JOptionPane.showMessageDialog(this, "O compromisso deve possuir uma data/horário válido!");
+        return;
+    }
+    }
+   
+    check = JOptionPane.showConfirmDialog(this, "Deseja mudar o estado do compromisso selecionado?", "Estado", JOptionPane.YES_NO_OPTION);
+    if (check == JOptionPane.YES_OPTION) {
+        compromisso.setEstado(Estado.Pendente == compromisso.getEstado() ? Estado.Concluida : Estado.Pendente);
+    }
+
+    // Atualiza na lista
+    CompromissoListModel.setElementAt(compromisso, selectedIndex);
 }
+
 
 private void deleteCompromisso() {
         int selectedIndex = CompromissoList.getSelectedIndex();

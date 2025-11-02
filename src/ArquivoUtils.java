@@ -96,7 +96,7 @@ public final class ArquivoUtils {
 
            for(int i = 0; i < lista.size(); i++)   
             {
-                leitor.write(lista.get(i).getDescricao() + "|" + lista.get(i).getPeriodo() + "|" + lista.get(i).geEstado().getDescricao() + "\n");
+                leitor.write(lista.get(i).getDescricao() + "|" + lista.get(i).getPeriodo() + "|" + lista.get(i).getEstado().getDescricao() + "\n");
             }
 
             leitor.close();

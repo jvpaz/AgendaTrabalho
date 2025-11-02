@@ -28,7 +28,7 @@ public final class CompromissoUtils {
         lista.add(listaModels.getElementAt(i));
 
         listaModels.clear();
-        lista.sort(Comparator.comparing(e -> e.geEstado()));
+        lista.sort(Comparator.comparing(e -> e.getEstado()));
         
         listaModels.addAll(lista);
     }
