@@ -20,4 +20,16 @@ public final class CompromissoUtils {
         
         listaModels.addAll(lista);
     }
+
+    public static void ordenarPorEstado(DefaultListModel<Compromisso> listaModels)
+    {
+        ArrayList<Compromisso> lista = new ArrayList<>();
+        for(int i = 0; i < listaModels.size(); i++)
+        lista.add(listaModels.getElementAt(i));
+
+        listaModels.clear();
+        lista.sort(Comparator.comparing(e -> e.geEstado()));
+        
+        listaModels.addAll(lista);
+    }
 }

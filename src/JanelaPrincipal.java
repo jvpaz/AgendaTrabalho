@@ -12,6 +12,8 @@ public class JanelaPrincipal extends JFrame {
     private DefaultListModel<Compromisso> CompromissoListModel; //Modelo da lista de compromissos
     private JList<Compromisso> CompromissoList; //Lista de compromissos
     private JButton addButton, editButton, deleteButton; //Botões de adicionar, deletar e editar.
+    private JRadioButton radioData, radioState;
+    private ButtonGroup radioButtonGroup;
 
 public JanelaPrincipal() {
         //Estabelece informações básicas da janela:
@@ -48,6 +50,23 @@ public JanelaPrincipal() {
         editButton = new JButton("Editar");
         deleteButton = new JButton("Deletar");
 
+
+        radioData = new JRadioButton("Periodo");
+        radioState = new JRadioButton("Estado");
+        radioButtonGroup = new ButtonGroup();
+        radioButtonGroup.add(radioData);
+        radioButtonGroup.add(radioState);
+
+        JPanel radioPanel = new JPanel(new GridLayout(3, 1, -70, -70));
+        JLabel radioLabel = new JLabel("Ordenar por:");
+        radioPanel.add(radioLabel);
+        radioPanel.add(radioData);
+        radioPanel.add(radioState);
+
+        radioData.addActionListener(e -> CompromissoUtils.ordernarPorData(CompromissoListModel));
+        radioState.addActionListener(e -> CompromissoUtils.ordenarPorEstado(CompromissoListModel));
+        
+
         //Cria os botões e os posiciona em seu painel respectivo.
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBorder(new EmptyBorder(10,10,10,10));
@@ -58,6 +77,7 @@ public JanelaPrincipal() {
         //Arruma a posição de cada painel.
         add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
+        add(radioPanel, BorderLayout.EAST);
 
         //Adiciona um evento a cada botão criado.
         addButton.addActionListener(e -> addCompromisso());
@@ -102,10 +122,9 @@ private void addCompromisso() {
     LocalDateTime dateTime = LocalDateTime.of(datePicker.getDate(), timePicker.getTime());
     //System.out.println(dateTime);
     newCompromisso.setPeriodo(dateTime);
+    newCompromisso.setEstado(Estado.Pendente);
 
     CompromissoListModel.addElement(newCompromisso);
-
-    CompromissoUtils.ordernarPorData(CompromissoListModel);
 }
 
 private void editCompromisso() {

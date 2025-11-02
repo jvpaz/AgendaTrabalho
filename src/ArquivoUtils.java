@@ -30,7 +30,8 @@ public final class ArquivoUtils {
                 String[] informacoes = linhas.split("\\|"); //Posicao [0] guarda a descrição, [1] a data;
                 String descricao = informacoes[0];
                 LocalDateTime data = LocalDateTime.parse(informacoes[1]);
-               tempCompromissos.add(new Compromisso(descricao, data));    
+                Estado estado = Estado.valueOf(informacoes[2]);
+               tempCompromissos.add(new Compromisso(descricao, data, estado));    
             }
 
             leitor.close();
@@ -95,7 +96,7 @@ public final class ArquivoUtils {
 
            for(int i = 0; i < lista.size(); i++)   
             {
-                leitor.write(lista.get(i).getDescricao() + "|" + lista.get(i).getPeriodo() + "\n");
+                leitor.write(lista.get(i).getDescricao() + "|" + lista.get(i).getPeriodo() + "|" + lista.get(i).geEstado().getDescricao() + "\n");
             }
 
             leitor.close();
